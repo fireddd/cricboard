@@ -10,6 +10,7 @@ public class WicketBallStrategy implements IBallProcessStrategy{
     public WicketBallStrategy(){
         this.teamUtil = new TeamUtil();
     }
+
     @Override
     public void processBall(Ball ball, Team team) {
         team.getTeamScore().setTotalWickets(team.getTeamScore().getTotalWickets() + 1);

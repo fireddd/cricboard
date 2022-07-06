@@ -31,7 +31,7 @@ public class TeamUtil {
         return team;
     }
 
-    public  Player getNextPlayer(Team team)
+    public Player getNextPlayer(Team team)
     {
         return team.getPlayerList().get(team.getNextPlayer());
     }

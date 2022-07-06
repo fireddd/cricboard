@@ -1,5 +1,7 @@
 package service;
 
+import exceptions.InvalidInputException;
+import exceptions.OutOfBoundBallException;
 import model.Ball;
 import model.BallType;
 import model.Game;
@@ -60,6 +62,8 @@ public class GameService {
 
     private void process(Ball ball, Team team)
     {
+        if(team.getTeamScore().getTotalWickets() == game.getNumberOfPlayers()-1)
+            throw new InvalidInputException();
         IBallProcessStrategy processingBallStrategy = ballProcessFactory.getProcessingStrategy(ball.getBallType());
         processingBallStrategy.processBall(ball, team);
     }
@@ -73,6 +77,8 @@ public class GameService {
             Ball ball = null;
             try{
                 int currentRuns = Integer.parseInt(ballString);
+                if(currentRuns <= 0 || currentRuns > 6)
+                    throw new OutOfBoundBallException();
                 ball = new Ball(ballType, currentRuns);
             }
             catch (Exception e){
@@ -88,7 +94,7 @@ public class GameService {
     private int playInning(Team team, List<String> inputs ,int startInputFrom)
     {
         int currentOver = 0;
-        while((currentOver < game.getNumberOfOvers() && team.getTeamScore().getTotalWickets() < game.getNumberOfPlayers()))
+        while((currentOver < game.getNumberOfOvers() && team.getTeamScore().getTotalWickets() < game.getNumberOfPlayers() - 1))
         {
             processOver(inputs.get(startInputFrom+ currentOver), team);
             currentOver++;

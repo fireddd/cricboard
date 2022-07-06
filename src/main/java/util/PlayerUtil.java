@@ -4,10 +4,10 @@ import model.Player;
 
 public class PlayerUtil {
 
-    public void wicket(Player player)
-    {
-        player.getScore().setBalls(player.getScore().getBalls()+1);
-    }
+//    public void wicket(Player player)
+//    {
+//        player.getScore().setBalls(player.getScore().getBalls()+1);
+//    }
 
     public void addRuns(Player player, Integer runs)
     {
