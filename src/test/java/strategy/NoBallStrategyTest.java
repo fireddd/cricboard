@@ -21,8 +21,8 @@ public class NoBallStrategyTest {
 
     @Test
     public void TestNoBallStrategy() {
-        Integer teamID = 11;
-        String players = "P31 P32";
+        Integer teamID = 122221;
+        String players = "P321 P322";
         teamService.initializeTeam(teamID, players);
         NoBallStrategy noBallStrategy = new NoBallStrategy(teamService);
         Ball ball = new Ball(BallType.NO_BALL);

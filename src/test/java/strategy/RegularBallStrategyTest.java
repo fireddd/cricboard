@@ -21,8 +21,8 @@ public class RegularBallStrategyTest {
 
     @Test
     public void TestRegularStrategy() {
-        Integer teamID = 9;
-        String players = "P11 P12";
+        Integer teamID = 11119;
+        String players = "P112 P122";
         teamService.initializeTeam(teamID, players);
         RegularBallStrategy noBallStrategy = new RegularBallStrategy(playerService, teamService);
         Ball ball = new Ball(BallType.REGULAR, 4);

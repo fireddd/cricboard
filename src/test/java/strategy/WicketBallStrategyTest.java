@@ -21,8 +21,8 @@ public class WicketBallStrategyTest {
 
     @Test
     public void TestWicketStrategy() {
-        Integer teamID = 3;
-        String players = "P61 P62";
+        Integer teamID = 11113;
+        String players = "P61111 P61112";
         teamService.initializeTeam(teamID, players);
         WicketBallStrategy wicketBallStrategy = new WicketBallStrategy(playerService, teamService);
         Ball ball = new Ball(BallType.WICKET);

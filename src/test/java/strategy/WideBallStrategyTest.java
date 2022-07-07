@@ -22,8 +22,8 @@ public class WideBallStrategyTest {
 
     @Test
     public void TestWideBallStrategy() {
-        Integer teamID = 6;
-        String players = "P81 P82";
+        Integer teamID = 642414;
+        String players = "P84241 P84212";
         teamService.initializeTeam(teamID, players);
         WideBallStrategy wideBallStrategy = new WideBallStrategy(teamService);
         Ball ball = new Ball(BallType.WIDE);

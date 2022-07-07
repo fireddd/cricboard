@@ -15,7 +15,7 @@ public class PlayerServiceTest {
 
     @Test
     public void addRunsTest() {
-        String playerName = "P71";
+        String playerName = "P11171";
         playerService.addPlayer(playerName);
         playerService.addRuns(playerService.getPlayer(playerName), 4);
         Assert.assertEquals(4, playerService.getPlayer(playerName).getScore().getScore());
