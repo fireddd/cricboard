@@ -39,9 +39,4 @@ public class PlayerDao {
         return this.playerMap.get(playerName);
     }
 
-    public void addPlayer(String playerName, Player player)
-    {
-        this.playerMap.put(playerName, player);
-    }
-
 }

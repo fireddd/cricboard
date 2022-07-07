@@ -3,29 +3,30 @@ package strategy;
 import model.Ball;
 import model.Team;
 import service.PlayerService;
-import util.TeamUtil;
+import service.TeamService;
 
 public class WicketBallStrategy implements IBallProcessStrategy{
-    TeamUtil teamUtil;
+    TeamService teamService;
     PlayerService playerService;
 
-    public WicketBallStrategy(PlayerService playerService){
-        this.teamUtil = new TeamUtil(playerService);
+    public WicketBallStrategy(PlayerService playerService , TeamService teamService){
+        this.teamService = teamService;
         this.playerService = playerService;
     }
 
     @Override
-    public void processBall(Ball ball, Team team) {
+    public void processBall(Ball ball, Integer teamID) {
+        Team team = teamService.getTeam(teamID);
         team.getTeamScore().setTotalWickets(team.getTeamScore().getTotalWickets() + 1);
         playerService.getPlayer(team.getCurrentStriker()).getScore().setBalls(playerService.getPlayer(team.getCurrentStriker()).getScore().getBalls() + 1);
-        //team.getCurrentStriker().getScore().setBalls(team.getCurrentStriker().getScore().getBalls() + 1);
         team.getTeamScore().setTotalBalls(team.getTeamScore().getTotalBalls() + 1);
-        processWicket(team);
+        processWicket(teamID);
     }
 
-    private void processWicket(Team team) {
+    private void processWicket(Integer teamID) {
+        Team team = teamService.getTeam(teamID);
         if(team.getNextPlayer() < team.getPlayerList().size())
-            team.setCurrentStriker(teamUtil.getNextPlayer(team).getName());
+            team.setCurrentStriker(teamService.getNextPlayer(teamID).getName());
         team.setNextPlayer(team.getNextPlayer() + 1);
     }
 }

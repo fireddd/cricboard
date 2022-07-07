@@ -9,68 +9,78 @@ import model.Team;
 import strategy.BallProcessFactory;
 import strategy.IBallProcessStrategy;
 import util.BallUtil;
-import util.TeamUtil;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import static java.lang.Math.abs;
+
 
 public class GameService implements IGameService{
     Game game;
     BallProcessFactory ballProcessFactory;
-    TeamUtil teamUtil;
+    TeamService teamService;
     BallUtil ballUtil;
     PlayerService playerService;
 
-    public GameService(PlayerService playerService){
+    public GameService(PlayerService playerService, TeamService teamService){
         this.playerService = playerService;
-        this.teamUtil = new TeamUtil(playerService);
+        this.teamService = teamService;
         this.ballUtil = new BallUtil();
-        this.ballProcessFactory = new BallProcessFactory(playerService);
+        this.ballProcessFactory = new BallProcessFactory(playerService, teamService);
     }
 
     @Override
-    public void initializeGame(List<String> inputs)
+    public void initializeGame(String numberOfPlayers, String numberOfOvers)
     {
         game = new Game();
-        game.setNumberOfPlayers(Integer.parseInt(inputs.get(0)));
-        game.setNumberOfOvers(Integer.parseInt(inputs.get(1)));
+        try{
+            game.setNumberOfPlayers(Integer.parseInt(numberOfPlayers));
+            game.setNumberOfOvers(Integer.parseInt(numberOfOvers));
+        }
+        catch(Exception exception)
+        {
+            throw new InvalidInputException();
+        }
+
     }
 
     @Override
     public void playGame(List<String> gameInputs)
     {
-        initializeGame(gameInputs);
-        Team firstTeam = teamUtil.initializeTeam(gameInputs.get(2));
+        Integer teamOneID = 1;
+        teamService.initializeTeam( teamOneID ,gameInputs.get(2));
         //System.out.println(firstTeam.toString());
-        int oversPlayedInFirstInning = playInning(firstTeam,gameInputs,3);
-        game.setFirstTeam(firstTeam);
+        int oversPlayedInFirstInning = playInning(teamOneID, gameInputs,3);
+        game.setFirstTeam(teamOneID);
+        System.out.println();
         System.out.println("Scorecard for Team 1: ");
         System.out.println();
-        teamUtil.printTeamScore(firstTeam);
+        teamService.printTeamScore(teamOneID);
         System.out.println();
         System.out.println();
-        Team secondTeam = teamUtil.initializeTeam(gameInputs.get(3 + oversPlayedInFirstInning));
+
+        Integer teamTwoID = 2;
+        teamService.initializeTeam(teamTwoID, gameInputs.get(3 + oversPlayedInFirstInning));
         //System.out.println(secondTeam.toString());
-        playInning(secondTeam,gameInputs,4 + oversPlayedInFirstInning);
-        game.setSecondTeam(secondTeam);
+        playInning(teamTwoID, gameInputs,4 + oversPlayedInFirstInning);
+        game.setSecondTeam(teamTwoID);
+        System.out.println();
         System.out.println("Scorecard for Team 2: ");
         System.out.println();
-        teamUtil.printTeamScore(secondTeam);
+        teamService.printTeamScore(teamTwoID);
         System.out.println();
         System.out.println();
     }
 
-    private void process(Ball ball, Team team)
+    private void process(Ball ball, Integer teamID)
     {
+        Team team = teamService.getTeam(teamID);
         if(team.getTeamScore().getTotalWickets() == game.getNumberOfPlayers()-1)
             throw new InvalidInputException();
         IBallProcessStrategy processingBallStrategy = ballProcessFactory.getProcessingStrategy(ball.getBallType());
-        processingBallStrategy.processBall(ball, team);
+        processingBallStrategy.processBall(ball, teamID);
     }
 
-    private void processOver(String overString, Team team)
+    private void processOver(String overString, Integer teamID)
     {
         List<String> balls = Arrays.stream(overString.trim().split(" ")).collect(Collectors.toList());
         for(String ballString: balls)
@@ -86,28 +96,31 @@ public class GameService implements IGameService{
             catch (Exception e){
                 ball = new Ball(ballType);
             }
-            process(ball, team);
+            process(ball, teamID);
         }
         System.out.println();
-        teamUtil.printTeamScore(team);
-        teamUtil.changeStrike(team);
+        teamService.printTeamScore(teamID);
+        teamService.changeStrike(teamID);
     }
 
-    private int playInning(Team team, List<String> inputs ,int startInputFrom)
+    private int playInning(Integer teamID, List<String> inputs ,int startInputFrom)
     {
+        Team team = teamService.getTeam(teamID);
         int currentOver = 0;
         while((currentOver < game.getNumberOfOvers() && team.getTeamScore().getTotalWickets() < game.getNumberOfPlayers() - 1))
         {
-            processOver(inputs.get(startInputFrom+ currentOver), team);
+            processOver(inputs.get(startInputFrom+ currentOver), teamID);
             currentOver++;
         }
         return currentOver;
     }
 
-    private void whoWon()
+    private void whoWon(Integer teamOneID, Integer teamTwoID)
     {
-        Integer firstTeamRuns = game.getFirstTeam().getTeamScore().getTotalRuns();
-        Integer secondTeamRuns = game.getSecondTeam().getTeamScore().getTotalRuns();
+        Team firstTeam = teamService.getTeam(teamOneID);
+        Team secondTeam = teamService.getTeam(teamTwoID);
+        Integer firstTeamRuns = firstTeam.getTeamScore().getTotalRuns();
+        Integer secondTeamRuns = secondTeam.getTeamScore().getTotalRuns();
         int delta = firstTeamRuns-secondTeamRuns;
         if(delta == 0)
         {
@@ -119,7 +132,7 @@ public class GameService implements IGameService{
         }
         else
         {
-            int wicketsWon = game.getNumberOfPlayers() - game.getSecondTeam().getTeamScore().getTotalWickets();
+            int wicketsWon = game.getNumberOfPlayers() - secondTeam.getTeamScore().getTotalWickets();
             System.out.println(" The match was won by the second team and they won by "+ wicketsWon + "wickets");
         }
 
@@ -130,12 +143,12 @@ public class GameService implements IGameService{
         System.out.println("Game Results:");
         System.out.println();
         System.out.println("Team 1 Results:");
-        teamUtil.printTeamScore(game.getFirstTeam());
+        teamService.printTeamScore(game.getFirstTeam());
         System.out.println();
         System.out.println("Team 2 Results:");
-        teamUtil.printTeamScore(game.getSecondTeam());
+        teamService.printTeamScore(game.getSecondTeam());
         System.out.println();
-        whoWon();
+        whoWon(1, 2);
     }
 
 

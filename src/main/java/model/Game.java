@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Game {
-    Team firstTeam;
-    Team secondTeam;
+    Integer firstTeam;
+    Integer secondTeam;
     int numberOfPlayers;
     int numberOfOvers;
 

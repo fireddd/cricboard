@@ -39,7 +39,6 @@ public class PlayerService implements IPlayerService{
     public void addRuns(String playerName, int runs) {
         Player player = getPlayer(playerName);
         addRuns(player, runs);
-        this.playerDao.addPlayer(playerName, player);
     }
 
 

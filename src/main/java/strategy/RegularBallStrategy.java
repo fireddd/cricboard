@@ -3,24 +3,24 @@ package strategy;
 import model.Ball;
 import model.Team;
 import service.PlayerService;
-import util.PlayerUtil;
-import util.TeamUtil;
+import service.TeamService;
 
 public class RegularBallStrategy implements IBallProcessStrategy{
-    TeamUtil teamUtil;
+    TeamService teamService;
     PlayerService playerService;
 
-    public RegularBallStrategy(PlayerService playerService) {
-        this.teamUtil = new TeamUtil(playerService);
+    public RegularBallStrategy( PlayerService playerService, TeamService teamService) {
+        this.teamService = teamService;
         this.playerService = playerService;
     }
 
     @Override
-    public void processBall(Ball ball, Team team) {
+    public void processBall(Ball ball, Integer teamID) {
+        Team team = teamService.getTeam(teamID);
         team.getTeamScore().setTotalRuns(team.getTeamScore().getTotalRuns() + ball.getRuns());
         team.getTeamScore().setTotalBalls(team.getTeamScore().getTotalBalls() + 1);
         playerService.addRuns(team.getCurrentStriker(), ball.getRuns());
         if(ball.getRuns() % 2 == 1)
-            teamUtil.changeStrike(team);
+            teamService.changeStrike(teamID);
     }
 }

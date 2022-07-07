@@ -1,5 +1,6 @@
 import service.GameService;
 import service.PlayerService;
+import service.TeamService;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,8 +20,9 @@ public class Driver {
             inputs.add(inp);
         }
         PlayerService playerService = new PlayerService();
-        GameService gameService = new GameService(playerService);
-        gameService.initializeGame(inputs);
+        TeamService teamService = new TeamService(playerService);
+        GameService gameService = new GameService(playerService, teamService);
+        gameService.initializeGame(inputs.get(0), inputs.get(1));
         gameService.playGame(inputs);
         gameService.printGameResults();
 
