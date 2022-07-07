@@ -5,4 +5,4 @@ P1 P2 P3 P4 P5
 W 4 4 Wd W 1 6
 P6 P7 P8 P9 P10
 4 6 W W 1 1
-6 1 6 
+6 1 W W
