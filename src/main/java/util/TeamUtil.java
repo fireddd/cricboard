@@ -2,20 +2,21 @@ package util;
 
 import model.Player;
 import model.Team;
+import service.PlayerService;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TeamUtil {
-    PlayerUtil playerUtil;
+    PlayerService playerService;
 
-    public TeamUtil(){
-        playerUtil = new PlayerUtil();
+    public TeamUtil(PlayerService playerService){
+        this.playerService = playerService;
     }
     public void changeStrike(Team team)
     {
-        Player striker = team.getCurrentStriker();
+        String striker = team.getCurrentStriker();
         team.setCurrentStriker(team.getCurrentNonStriker());
         team.setCurrentNonStriker(striker);
     }
@@ -24,9 +25,13 @@ public class TeamUtil {
         Team team = new Team();
         List<String> stringPlayers = Arrays.stream(players.trim().split(" ")).collect(Collectors.toList());
         for(String player: stringPlayers)
+        {
             team.getPlayerList().add(new Player(player));
-        team.setCurrentStriker(team.getPlayerList().get(0));
-        team.setCurrentNonStriker(team.getPlayerList().get(1));
+            playerService.addPlayer(player);
+        }
+
+        team.setCurrentStriker(team.getPlayerList().get(0).getName());
+        team.setCurrentNonStriker(team.getPlayerList().get(1).getName());
         team.setNextPlayer(2);
         return team;
     }

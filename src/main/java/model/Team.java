@@ -12,8 +12,8 @@ import java.util.List;
 public class Team {
     List<Player> playerList;
     int nextPlayer;
-    Player currentStriker;
-    Player currentNonStriker;
+    String currentStriker;
+    String currentNonStriker;
     TeamScore teamScore;
 
     public Team(){

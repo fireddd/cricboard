@@ -14,21 +14,23 @@ import util.TeamUtil;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import static java.lang.Math.abs;
 
-public class GameService {
+public class GameService implements IGameService{
     Game game;
     BallProcessFactory ballProcessFactory;
     TeamUtil teamUtil;
     BallUtil ballUtil;
+    PlayerService playerService;
 
-    public GameService(){
-        this.teamUtil = new TeamUtil();
+    public GameService(PlayerService playerService){
+        this.playerService = playerService;
+        this.teamUtil = new TeamUtil(playerService);
         this.ballUtil = new BallUtil();
-        this.ballProcessFactory = new BallProcessFactory();
+        this.ballProcessFactory = new BallProcessFactory(playerService);
     }
 
+    @Override
     public void initializeGame(List<String> inputs)
     {
         game = new Game();
@@ -36,7 +38,7 @@ public class GameService {
         game.setNumberOfOvers(Integer.parseInt(inputs.get(1)));
     }
 
-
+    @Override
     public void playGame(List<String> gameInputs)
     {
         initializeGame(gameInputs);
@@ -122,6 +124,8 @@ public class GameService {
         }
 
     }
+
+    @Override
     public void printGameResults() {
         System.out.println("Game Results:");
         System.out.println();
