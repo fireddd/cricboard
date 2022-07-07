@@ -22,9 +22,17 @@ public class Driver {
         PlayerService playerService = new PlayerService();
         TeamService teamService = new TeamService(playerService);
         GameService gameService = new GameService(playerService, teamService);
+        Integer teamOneID = 1;
+        Integer teamTwoID = 2;
         gameService.initializeGame(inputs.get(0), inputs.get(1));
-        gameService.playGame(inputs);
-        gameService.printGameResults();
+        gameService.playGame(inputs, teamOneID, teamTwoID);
+        gameService.printGameResults(teamOneID, teamTwoID);
+//
+//        System.out.println();
+//        System.out.println(teamService.getTeam(1).getTeamScore().toString());
+//
+//        System.out.println();
+//        System.out.println(playerService.getPlayer("P1").toString());
 
     }
 }

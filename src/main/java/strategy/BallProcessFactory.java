@@ -7,8 +7,8 @@ import service.TeamService;
 
 public class BallProcessFactory {
 
-    PlayerService playerService;
-    TeamService teamService;
+    private PlayerService playerService;
+    private TeamService teamService;
     public BallProcessFactory(PlayerService playerService, TeamService teamService) {
         this.playerService = playerService;
         this.teamService = teamService;

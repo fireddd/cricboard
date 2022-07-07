@@ -6,8 +6,8 @@ import service.PlayerService;
 import service.TeamService;
 
 public class RegularBallStrategy implements IBallProcessStrategy{
-    TeamService teamService;
-    PlayerService playerService;
+    private TeamService teamService;
+    private PlayerService playerService;
 
     public RegularBallStrategy( PlayerService playerService, TeamService teamService) {
         this.teamService = teamService;

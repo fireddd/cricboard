@@ -6,7 +6,7 @@ import service.TeamService;
 
 public class WideBallStrategy implements IBallProcessStrategy{
 
-    TeamService teamService;
+    private TeamService teamService;
 
     public WideBallStrategy(TeamService teamService) {
         this.teamService = teamService;

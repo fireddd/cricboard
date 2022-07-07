@@ -20,7 +20,7 @@ public class PlayerDao {
     }
 
     private PlayerDao(){
-        playerMap = new HashMap<>();
+        this.playerMap = new HashMap<>();
     }
 
     public void addPlayer(String playerName)

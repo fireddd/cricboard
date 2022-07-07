@@ -4,7 +4,7 @@ import model.BallType;
 
 public class BallUtil {
 
-    public BallType getBallTypeFromCode(String ballTypeCode)
+    public static BallType getBallTypeFromCode(String ballTypeCode)
     {
         return switch (ballTypeCode) {
             case "Wd" -> BallType.WIDE;

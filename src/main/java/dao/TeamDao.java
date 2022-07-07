@@ -20,7 +20,7 @@ public class TeamDao {
     }
 
     private TeamDao(){
-        teamMap = new HashMap<>();
+        this.teamMap = new HashMap<>();
     }
 
     public void addTeam(Integer teamID)

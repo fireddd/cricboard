@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 public class TeamService implements ITeamService{
 
     private TeamDao teamDao;
+    private PlayerService playerService;
 
-    PlayerService playerService;
     public TeamService(PlayerService playerService) {
         this.playerService = playerService;
         this.teamDao = TeamDao.getInstance();
