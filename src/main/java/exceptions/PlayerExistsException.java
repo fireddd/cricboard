@@ -1,4 +1,4 @@
 package exceptions;
 
-public class PlayerExistsException extends RuntimeException{
+public class PlayerExistsException extends RuntimeException {
 }

@@ -4,7 +4,7 @@ import model.Ball;
 import model.Team;
 import service.TeamService;
 
-public class NoBallStrategy implements IBallProcessStrategy{
+public class NoBallStrategy implements IBallProcessStrategy {
 
     private TeamService teamService;
 

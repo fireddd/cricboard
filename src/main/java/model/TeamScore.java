@@ -10,7 +10,8 @@ public class TeamScore {
     int totalBalls;
     int totalWickets;
     int totalExtras;
-    public TeamScore(){
+
+    public TeamScore() {
         this.totalRuns = 0;
         this.totalBalls = 0;
         this.totalWickets = 0;

@@ -1,4 +1,4 @@
 package exceptions;
 
-public class TeamExistsException extends RuntimeException{
+public class TeamExistsException extends RuntimeException {
 }

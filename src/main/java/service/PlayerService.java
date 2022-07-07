@@ -5,7 +5,7 @@ import exceptions.PlayerExistsException;
 import exceptions.PlayerNotFoundException;
 import model.Player;
 
-public class PlayerService implements IPlayerService{
+public class PlayerService implements IPlayerService {
 
     private PlayerDao playerDao;
 
@@ -13,13 +13,12 @@ public class PlayerService implements IPlayerService{
         this.playerDao = PlayerDao.getInstance();
     }
 
+
     @Override
     public void addPlayer(String playerName) {
-        try{
+        try {
             this.playerDao.addPlayer(playerName);
-        }
-        catch (PlayerExistsException e)
-        {
+        } catch (PlayerExistsException e) {
             System.out.println("Player alreadys exists with the name" + playerName);
         }
     }
@@ -28,8 +27,7 @@ public class PlayerService implements IPlayerService{
     public Player getPlayer(String playerName) {
         try {
             return this.playerDao.getPlayer(playerName);
-        }
-        catch(PlayerNotFoundException exception){
+        } catch (PlayerNotFoundException exception) {
             throw exception;
         }
 
@@ -42,11 +40,10 @@ public class PlayerService implements IPlayerService{
     }
 
 
-    public void addRuns(Player player, Integer runs)
-    {
-        if(runs%4 == 0)
+    public void addRuns(Player player, Integer runs) {
+        if (runs % 4 == 0)
             player.getScore().setFours(player.getScore().getFours() + 1);
-        else if(runs%6 == 0)
+        else if (runs % 6 == 0)
             player.getScore().setSixes(player.getScore().getSixes() + 1);
         player.getScore().setScore(player.getScore().getScore() + runs);
         player.getScore().setBalls(player.getScore().getBalls() + 1);

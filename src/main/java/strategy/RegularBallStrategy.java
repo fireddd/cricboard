@@ -5,11 +5,11 @@ import model.Team;
 import service.PlayerService;
 import service.TeamService;
 
-public class RegularBallStrategy implements IBallProcessStrategy{
+public class RegularBallStrategy implements IBallProcessStrategy {
     private TeamService teamService;
     private PlayerService playerService;
 
-    public RegularBallStrategy( PlayerService playerService, TeamService teamService) {
+    public RegularBallStrategy(PlayerService playerService, TeamService teamService) {
         this.teamService = teamService;
         this.playerService = playerService;
     }
@@ -20,7 +20,7 @@ public class RegularBallStrategy implements IBallProcessStrategy{
         team.getTeamScore().setTotalRuns(team.getTeamScore().getTotalRuns() + ball.getRuns());
         team.getTeamScore().setTotalBalls(team.getTeamScore().getTotalBalls() + 1);
         playerService.addRuns(team.getCurrentStriker(), ball.getRuns());
-        if(ball.getRuns() % 2 == 1)
+        if (ball.getRuns() % 2 == 1)
             teamService.changeStrike(teamID);
     }
 }

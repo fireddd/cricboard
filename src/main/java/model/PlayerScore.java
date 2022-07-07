@@ -10,8 +10,8 @@ public class PlayerScore {
     int balls;
     int fours;
     int sixes;
-    public PlayerScore()
-    {
+
+    public PlayerScore() {
         this.score = 0;
         this.balls = 0;
         this.fours = 0;

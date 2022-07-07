@@ -13,27 +13,25 @@ public class TeamDao {
 
     private Map<Integer, Team> teamMap;
 
-    public static TeamDao getInstance(){
-        if(teamDaoInstance == null)
+    public static TeamDao getInstance() {
+        if (teamDaoInstance == null)
             teamDaoInstance = new TeamDao();
         return teamDaoInstance;
     }
 
-    private TeamDao(){
+    private TeamDao() {
         this.teamMap = new HashMap<>();
     }
 
-    public void addTeam(Integer teamID)
-    {
-        if(this.teamMap.containsKey(teamID)){
+    public void addTeam(Integer teamID) {
+        if (this.teamMap.containsKey(teamID)) {
             throw new TeamExistsException();
         }
         this.teamMap.put(teamID, new Team());
     }
 
-    public Team getTeam(Integer teamID)
-    {
-        if(!this.teamMap.containsKey(teamID)){
+    public Team getTeam(Integer teamID) {
+        if (!this.teamMap.containsKey(teamID)) {
             throw new TeamNotFoundException();
         }
         return this.teamMap.get(teamID);

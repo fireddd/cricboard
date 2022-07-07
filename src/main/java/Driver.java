@@ -8,14 +8,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Driver {
-    public static void main(String[] args) throws Exception
-    {
+    public static void main(String[] args) throws Exception {
         File file = new File(
                 "C:\\Users\\shubh\\Desktop\\Learn Git\\cricboard\\src\\main\\java\\Inputs.txt");
         Scanner sc = new Scanner(file);
         List<String> inputs = new ArrayList<>();
-        while (sc.hasNextLine())
-        {
+        while (sc.hasNextLine()) {
             String inp = sc.nextLine();
             inputs.add(inp);
         }
@@ -27,12 +25,12 @@ public class Driver {
         gameService.initializeGame(inputs.get(0), inputs.get(1));
         gameService.playGame(inputs, teamOneID, teamTwoID);
         gameService.printGameResults(teamOneID, teamTwoID);
-//
-//        System.out.println();
-//        System.out.println(teamService.getTeam(1).getTeamScore().toString());
-//
-//        System.out.println();
-//        System.out.println(playerService.getPlayer("P1").toString());
+
+        System.out.println();
+        System.out.println(teamService.getTeam(teamOneID).getTeamScore().toString());
+
+        System.out.println();
+        System.out.println(playerService.getPlayer("P1").toString());
 
     }
 }

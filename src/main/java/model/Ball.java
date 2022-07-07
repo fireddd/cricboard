@@ -10,7 +10,8 @@ import lombok.Setter;
 public class Ball {
     BallType ballType;
     int runs;
-    public Ball(BallType ballType){
+
+    public Ball(BallType ballType) {
         this.ballType = ballType;
         this.runs = 0;
     }

@@ -1,6 +1,5 @@
 package service;
 
-import model.Player;
 import model.Team;
 
 public interface ITeamService {
@@ -13,7 +12,7 @@ public interface ITeamService {
 
     void initializeTeam(Integer teamID, String players);
 
-    String  getNextPlayer(Integer teamID);
+    String getNextPlayer(Integer teamID);
 
     void printTeamScore(Integer teamID);
 

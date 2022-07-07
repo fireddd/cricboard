@@ -16,7 +16,7 @@ public class Team {
     String currentNonStriker;
     TeamScore teamScore;
 
-    public Team(){
+    public Team() {
         this.playerList = new ArrayList<>();
         this.teamScore = new TeamScore();
     }

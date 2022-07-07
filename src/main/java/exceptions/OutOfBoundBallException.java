@@ -1,4 +1,4 @@
 package exceptions;
 
-public class OutOfBoundBallException extends RuntimeException{
+public class OutOfBoundBallException extends RuntimeException {
 }

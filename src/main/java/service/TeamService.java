@@ -1,23 +1,15 @@
 package service;
 
 import dao.TeamDao;
-import exceptions.InvalidInputException;
-import exceptions.OutOfBoundBallException;
 import exceptions.TeamExistsException;
 import exceptions.TeamNotFoundException;
-import model.Ball;
-import model.BallType;
-import model.Player;
 import model.Team;
-import strategy.BallProcessFactory;
-import strategy.IBallProcessStrategy;
-import util.BallUtil;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TeamService implements ITeamService{
+public class TeamService implements ITeamService {
 
     private TeamDao teamDao;
     private PlayerService playerService;
@@ -29,10 +21,9 @@ public class TeamService implements ITeamService{
 
     @Override
     public void addTeam(Integer teamID) {
-        try{
+        try {
             this.teamDao.addTeam(teamID);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new TeamExistsException();
         }
 
@@ -40,19 +31,17 @@ public class TeamService implements ITeamService{
 
     @Override
     public Team getTeam(Integer teamID) {
-        try{
+        try {
             return this.teamDao.getTeam(teamID);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new TeamNotFoundException();
         }
 
     }
 
     @Override
-    public void changeStrike(Integer teamID)
-    {
-        Team team = this.teamDao.getTeam(teamID);
+    public void changeStrike(Integer teamID) {
+        Team team = getTeam(teamID);
         String striker = team.getCurrentStriker();
         team.setCurrentStriker(team.getCurrentNonStriker());
         team.setCurrentNonStriker(striker);
@@ -60,11 +49,10 @@ public class TeamService implements ITeamService{
 
     @Override
     public void initializeTeam(Integer teamID, String players) {
-        this.teamDao.addTeam(teamID);
-        Team team = this.teamDao.getTeam(teamID);
+        addTeam(teamID);
+        Team team = getTeam(teamID);
         List<String> stringPlayers = Arrays.stream(players.trim().split(" ")).collect(Collectors.toList());
-        for(String player: stringPlayers)
-        {
+        for (String player : stringPlayers) {
             team.getPlayerList().add(player);
             this.playerService.addPlayer(player);
         }
@@ -74,25 +62,21 @@ public class TeamService implements ITeamService{
     }
 
     @Override
-    public String getNextPlayer(Integer teamID)
-    {
-        Team team = this.teamDao.getTeam(teamID);
+    public String getNextPlayer(Integer teamID) {
+        Team team = getTeam(teamID);
         return team.getPlayerList().get(team.getNextPlayer());
     }
 
-    private void printIndividualScore(Integer teamID)
-    {
-        Team team = this.teamDao.getTeam(teamID);
-        for(String currentPlayer: team.getPlayerList())
-        {
+    private void printIndividualScore(Integer teamID) {
+        Team team = getTeam(teamID);
+        for (String currentPlayer : team.getPlayerList()) {
             System.out.println(this.playerService.getPlayer(currentPlayer).toString());
         }
     }
 
     @Override
-    public void printTeamScore(Integer teamID)
-    {
-        Team team = this.teamDao.getTeam(teamID);
+    public void printTeamScore(Integer teamID) {
+        Team team = getTeam(teamID);
         System.out.println(team.getTeamScore().toString());
         printIndividualScore(teamID);
     }

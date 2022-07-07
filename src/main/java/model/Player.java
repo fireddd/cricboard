@@ -8,8 +8,8 @@ import lombok.Setter;
 public class Player {
     String name;
     PlayerScore score;
-    public Player(String name)
-    {
+
+    public Player(String name) {
         this.name = name;
         this.score = new PlayerScore();
     }
