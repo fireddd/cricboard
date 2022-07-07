@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Team {
-    List<Player> playerList;
+    List<String> playerList;
     int nextPlayer;
     String currentStriker;
     String currentNonStriker;

@@ -49,7 +49,7 @@ public class TeamService implements ITeamService{
 
     }
 
-
+    @Override
     public void changeStrike(Integer teamID)
     {
         Team team = this.teamDao.getTeam(teamID);
@@ -58,35 +58,38 @@ public class TeamService implements ITeamService{
         team.setCurrentNonStriker(striker);
     }
 
+    @Override
     public void initializeTeam(Integer teamID, String players) {
         this.teamDao.addTeam(teamID);
         Team team = this.teamDao.getTeam(teamID);
         List<String> stringPlayers = Arrays.stream(players.trim().split(" ")).collect(Collectors.toList());
         for(String player: stringPlayers)
         {
-            team.getPlayerList().add(new Player(player));
+            team.getPlayerList().add(player);
             this.playerService.addPlayer(player);
         }
-        team.setCurrentStriker(team.getPlayerList().get(0).getName());
-        team.setCurrentNonStriker(team.getPlayerList().get(1).getName());
+        team.setCurrentStriker(team.getPlayerList().get(0));
+        team.setCurrentNonStriker(team.getPlayerList().get(1));
         team.setNextPlayer(2);
     }
 
-    public Player getNextPlayer(Integer teamID)
+    @Override
+    public String getNextPlayer(Integer teamID)
     {
         Team team = this.teamDao.getTeam(teamID);
         return team.getPlayerList().get(team.getNextPlayer());
     }
 
-    public void printIndividualScore(Integer teamID)
+    private void printIndividualScore(Integer teamID)
     {
         Team team = this.teamDao.getTeam(teamID);
-        for(Player currentPlayer: team.getPlayerList())
+        for(String currentPlayer: team.getPlayerList())
         {
-            System.out.println(currentPlayer.toString());
+            System.out.println(this.playerService.getPlayer(currentPlayer).toString());
         }
     }
 
+    @Override
     public void printTeamScore(Integer teamID)
     {
         Team team = this.teamDao.getTeam(teamID);

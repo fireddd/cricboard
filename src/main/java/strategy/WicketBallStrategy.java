@@ -26,7 +26,7 @@ public class WicketBallStrategy implements IBallProcessStrategy{
     private void processWicket(Integer teamID) {
         Team team = teamService.getTeam(teamID);
         if(team.getNextPlayer() < team.getPlayerList().size())
-            team.setCurrentStriker(teamService.getNextPlayer(teamID).getName());
+            team.setCurrentStriker(teamService.getNextPlayer(teamID));
         team.setNextPlayer(team.getNextPlayer() + 1);
     }
 }
