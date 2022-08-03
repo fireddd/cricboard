@@ -1,5 +1,4 @@
-# cricboard
-cricboard
+# Cricketboard
 You will be given the number of players in each team, the number of overs and their batting
 order as input. Then, we can input overs ball by ball with the runs scored on that ball (could be
 wide, no ball or a wicket as well).
